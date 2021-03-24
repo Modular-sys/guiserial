@@ -1,0 +1,2 @@
+module guiserial.core.main {
+}

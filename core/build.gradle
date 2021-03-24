@@ -1,0 +1,9 @@
+compileJava {
+    inputs.property("moduleName", "guiserial.core.main")
+    doFirst {
+        options.compilerArgs = [
+                '--module-path', classpath.asPath,
+        ]
+        classpath = files()
+    }
+}

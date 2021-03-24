@@ -1,0 +1,80 @@
+plugins {
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+    id 'org.beryx.jlink' version '2.23.1'
+}
+
+application.mainModule.set("$moduleName")
+mainClassName = "org.tdom.guiserial.MainApp"
+
+run {
+    jvmArgs = ['-Djdk.gtk.version=2']
+    // required due to a bug in Java: https://github.com/javafxports/openjdk-jfx/issues/175
+}
+
+jar {
+    inputs.property("moduleName", moduleName)
+
+    manifest {
+        attributes 'Automatic-Module-Name': moduleName
+    }
+}
+
+javafx {
+    version = "15.0.1"
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.base']
+}
+
+dependencies {
+    implementation(project(":core"))
+}
+
+jlink {
+    options.set(['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages'])
+    addExtraDependencies("javafx")
+    forceMerge("jackson", "log4j-api")
+    launcher {
+        name = 'guiserial'
+        jvmArgs = ['-Djdk.gtk.version=2', '-Dfile.encoding=utf-8']
+    }
+
+    jpackage {
+        def os = org.gradle.internal.os.OperatingSystem.current()
+//        jpackageHome = 'D:/Developer/OpenJDK16U-jdk'
+        icon = "${projectDir}/src/main/resources/icon/icon.ico"
+        installerOptions = [
+                '--name', 'guiserial',
+                '--app-version', "${project.version}",
+                '--description', 'Pretty nice Zookeeper GUI',
+                '--copyright', 'Apache License',
+                '--vendor', 'vran'
+        ]
+        if (os.windows) {
+            installerType = 'msi'
+            installerOptions += [
+                    '--win-per-user-install', '--win-dir-chooser',
+                    '--win-shortcut'
+            ]
+        }
+
+        if (os.macOsX) {
+            installerType = 'dmg'
+        }
+
+        if (os.linux) {
+            installerOptions += [
+                    '--linux-deb-maintainer', 'vran_dev@foxmail.com',
+                    '--linux-rpm-license-type', 'GPLv3',
+                    '--linux-shortcut'
+            ]
+        }
+    }
+}
+
+jpackage {
+    doLast {
+        file("${buildDir}/jpackage/guiserial-${version}.dmg").renameTo("${buildDir}/jpackage/guiserial-mac.dmg")
+        file("${buildDir}/jpackage/guiserial-${version}.msi").renameTo("${buildDir}/jpackage/guiserial-win.msi")
+        file("${buildDir}/jpackage/guiserial-${version}.rpm").renameTo("${buildDir}/jpackage/guiserial-linux.rpm")
+        file("${buildDir}/jpackage/guiserial-${version}.deb").renameTo("${buildDir}/jpackage/guiserial-linux.deb")
+    }
+}
