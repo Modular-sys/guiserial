@@ -5,7 +5,7 @@ plugins {
 }
 
 application.mainModule.set("$moduleName")
-mainClassName = "org.tdom.guiserial.MainApp"
+mainClassName = "org.tdom.guiserial.ApplicationMain"
 
 run {
     jvmArgs = ['-Djdk.gtk.version=2']

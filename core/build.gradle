@@ -7,3 +7,8 @@ compileJava {
         classpath = files()
     }
 }
+
+dependencies {
+    implementation group: 'org.rxtx', name: 'rxtx', version: '2.1.7'
+    implementation group: 'io.netty', name: 'netty-all', version: '4.1.60.Final'
+}
