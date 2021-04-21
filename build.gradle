@@ -1,9 +1,9 @@
 allprojects {
-
     apply plugin: 'idea'
 
     group 'org.tdom'
-    version '1.0-SNAPSHOT'
+    //javafx应用版本字符串不能有-中横线
+    version '1.0'
 
     repositories {
         maven {

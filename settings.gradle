@@ -1,4 +1,3 @@
 rootProject.name = 'guiserial'
 include 'app'
 include 'core'
-

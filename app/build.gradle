@@ -7,8 +7,11 @@ plugins {
 application.mainModule.set("$moduleName")
 mainClassName = "org.tdom.guiserial.ApplicationMain"
 
+
+def jvmArgsSet = ['-Djdk.gtk.version=2', '-Dfile.encoding=utf-8']
+
 run {
-    jvmArgs = ['-Djdk.gtk.version=2']
+    jvmArgs = jvmArgsSet
     // required due to a bug in Java: https://github.com/javafxports/openjdk-jfx/issues/175
 }
 
@@ -35,12 +38,12 @@ jlink {
     forceMerge("jackson", "log4j-api")
     launcher {
         name = 'guiserial'
-        jvmArgs = ['-Djdk.gtk.version=2', '-Dfile.encoding=utf-8']
+        jvmArgs = jvmArgsSet
     }
 
     jpackage {
         def os = org.gradle.internal.os.OperatingSystem.current()
-        icon = "${projectDir}/src/main/resources/assets/icon/icon.ico"
+        jpackageHome="${jpackagePath}"
         installerOptions = [
                 '--name', 'guiserial',
                 '--app-version', "${project.version}",
@@ -49,6 +52,7 @@ jlink {
                 '--vendor', 'vran'
         ]
         if (os.windows) {
+            icon = "${projectDir}/src/main/resources/assets/icon/icon.ico"
             installerType = 'msi'
             installerOptions += [
                     '--win-per-user-install', '--win-dir-chooser',
@@ -57,10 +61,12 @@ jlink {
         }
 
         if (os.macOsX) {
+            icon = "${projectDir}/src/main/resources/assets/icon/icon.ico"
             installerType = 'dmg'
         }
 
         if (os.linux) {
+            icon = "${projectDir}/src/main/resources/assets/icon/icon.ico"
             installerOptions += [
                     '--linux-deb-maintainer', 'vran_dev@foxmail.com',
                     '--linux-rpm-license-type', 'GPLv3',
