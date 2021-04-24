@@ -33,9 +33,9 @@ subprojects {
         }
     }
 
-    dependencies { DependencyHandler d ->
-        d.testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-        d.testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    dependencies {
+        it.testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+        it.testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     }
 
     test {

@@ -1,17 +1,19 @@
 plugins {
-    id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.9'
-    id 'org.beryx.jlink' version '2.23.1'
+    id 'org.beryx.jlink' version '2.23.7'
 }
 
-application.mainModule.set("$moduleName")
-mainClassName = "org.tdom.guiserial.ApplicationMain"
-
+application {
+    mainModule.set("$moduleName")
+    mainClass.set("org.tdom.guiserial.ApplicationMain")
+}
 
 def jvmArgsSet = ['-Djdk.gtk.version=2', '-Dfile.encoding=utf-8']
 
 run {
     jvmArgs = jvmArgsSet
+    mainModule.set("$moduleName")
+    mainClass.set("org.tdom.guiserial.ApplicationMain")
     // required due to a bug in Java: https://github.com/javafxports/openjdk-jfx/issues/175
 }
 
