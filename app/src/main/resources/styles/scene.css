@@ -1,4 +1,20 @@
 .label {
-    -fx-border-color: black;
+    -fx-border-color: #908b8b;
     -fx-background-color: #f0e2e2;
+}
+
+.left-back {
+    -fx-background-color: #ffffff;
+}
+
+.text-area {
+    -fx-background-color: #f0e2e2;
+}
+
+.button-bar {
+    -fx-background-color: #908b8b;
+}
+
+.text-field {
+    -fx-background-color: #ffffff;
 }

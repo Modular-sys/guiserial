@@ -26,7 +26,7 @@ subprojects {
     }
 
     idea {
-        module {
+        it.module {
             inheritOutputDirs = false
             outputDir = compileJava.destinationDir
             testOutputDir = compileTestJava.destinationDir
@@ -39,6 +39,6 @@ subprojects {
     }
 
     test {
-        useJUnitPlatform()
+        it.useJUnitPlatform()
     }
 }

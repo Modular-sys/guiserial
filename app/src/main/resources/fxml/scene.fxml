@@ -11,15 +11,15 @@
 
 <HBox stylesheets="@../styles/scene.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tdom.guiserial.fxml.FXMLController">
     <children>
-        <VBox prefHeight="400.0" prefWidth="438.0">
+        <VBox prefHeight="400.0" prefWidth="438.0" styleClass="left-back">
             <children>
-            <Label prefHeight="17.0" prefWidth="461.0" styleClass="label" text="Label" />
-                <TextArea prefHeight="141.0" prefWidth="438.0" style="-fx-background-color: black;" />
-            <Label prefHeight="17.0" prefWidth="461.0" styleClass="label" text="Label" />
-                <TextArea prefHeight="150.0" prefWidth="438.0" style="-fx-background-color: black;" />
+                <Label prefHeight="17.0" prefWidth="461.0" styleClass="label" text="Label" />
+                <TextArea prefHeight="141.0" prefWidth="438.0" />
+                <Label prefHeight="17.0" prefWidth="461.0" styleClass="label" text="Label" />
+                <TextArea prefHeight="150.0" prefWidth="438.0" />
                 <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="446.0" styleClass="label" text="输入" />
-                <TextField prefHeight="23.0" prefWidth="438.0" style="-fx-border-color: blue;" />
-                <ButtonBar prefHeight="29.0" prefWidth="435.0" style="-fx-background-color: white;">
+                <TextField prefHeight="23.0" prefWidth="438.0" />
+                <ButtonBar prefHeight="29.0" prefWidth="435.0">
                     <buttons>
                         <Button mnemonicParsing="false" text="Button" />
                         <Button mnemonicParsing="false" text="Button" />
@@ -27,7 +27,7 @@
                 </ButtonBar>
             </children>
         </VBox>
-        <VBox layoutX="10.0" layoutY="10.0" prefHeight="343.0" prefWidth="80.0">
+        <VBox layoutX="10.0" layoutY="10.0" prefHeight="99.0" prefWidth="106.0">
             <children>
                 <RadioButton mnemonicParsing="false" opacity="0.73" style="-fx-padding: 6;" text="Radio" />
             </children>
