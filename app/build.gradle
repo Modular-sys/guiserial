@@ -1,88 +1,66 @@
+import org.gradle.internal.os.OperatingSystem
+
 plugins {
-    id 'org.openjfx.javafxplugin' version '0.0.9'
-    id 'org.beryx.jlink' version '2.23.7'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'org.beryx.runtime' version '1.12.5'
 }
 
-application {
-    mainModule.set("$moduleName")
-    mainClass.set("org.tdom.guiserial.ApplicationMain")
-}
-
-def jvmArgsSet = ['-Djdk.gtk.version=2', '-Dfile.encoding=utf-8']
-
-run {
-    jvmArgs = jvmArgsSet
-    mainModule.set("$moduleName")
-    mainClass.set("org.tdom.guiserial.ApplicationMain")
-    // required due to a bug in Java: https://github.com/javafxports/openjdk-jfx/issues/175
-}
-
-jar {
-    inputs.property("moduleName", moduleName)
-
-    manifest {
-        attributes 'Automatic-Module-Name': moduleName
-    }
-}
+jar.manifest.attributes('Main-Class': 'xyz.zenheart.guiserial.Launcher')
 
 javafx {
-    version = "15.0.1"
+    version = "17.0.1"
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.base']
 }
 
-dependencies {
-    implementation(project(":core"))
+application {
+    mainClass.set("xyz.zenheart.guiserial.Launcher")
+    applicationName = 'guiserial'
 }
 
-jlink {
-    options.set(['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages'])
-    addExtraDependencies("javafx")
-    forceMerge("jackson", "log4j-api")
+dependencies {
+    implementation project(':core')
+    implementation 'com.fazecast:jSerialComm:2.7.0'
+    implementation "com.zaxxer:HikariCP:${hikaricp_version}"
+    implementation "org.xerial:sqlite-jdbc:${sqlite_version}"
+    implementation "org.postgresql:postgresql:${pgsql_version}"
+    implementation "mysql:mysql-connector-java:${mysql_version}"
+    implementation "org.freemarker:freemarker:${freemarker_version}"
+    implementation "org.mybatis:mybatis:${mybatis_version}"
+    implementation "org.mybatis:mybatis-spring:${mybatis_spring_version}"
+    implementation "org.slf4j:slf4j-simple:${slf4j_simple_version}"
+    implementation "org.springframework:spring-test:${spring_version}"
+    implementation "org.springframework:spring-jdbc:${spring_version}"
+    implementation "org.springframework:spring-context:${spring_version}"
+    implementation "org.springframework:spring-context-support:${spring_version}"
+}
+
+tasks.jar.enabled = true
+
+runtime {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+
+    modules = ['java.management', 'java.naming', 'java.instrument', 'java.sql', 'jdk.unsupported', 'jdk.security.jgss', 'java.scripting', 'java.desktop']
+
     launcher {
-        name = 'guiserial'
-        jvmArgs = jvmArgsSet
+        noConsole = false
     }
 
     jpackage {
-        def os = org.gradle.internal.os.OperatingSystem.current()
-        jpackageHome="${jpackagePath}"
-        installerOptions = [
-                '--name', 'guiserial',
-                '--app-version', "${project.version}",
-                '--description', 'guiserial serial port GUI',
-                '--copyright', 'Apache License',
-                '--vendor', 'vran'
-        ]
+
+        OperatingSystem os = OperatingSystem.current()
+        String imgType = os.windows ? 'ico' : os.macOsX ? 'icns' : 'png'
+        imageOptions += ['--icon', "src/main/resources/runtime.$imgType"]
+        installerOptions += ['--resource-dir', "src/main/resources"]
+        installerOptions += ['--vendor', 'Acme Corporation']
+
         if (os.windows) {
-            icon = "${projectDir}/src/main/resources/assets/icon/icon.ico"
             installerType = 'msi'
-            installerOptions += [
-                    '--win-per-user-install', '--win-dir-chooser',
-                    '--win-shortcut'
-            ]
+            installerOptions += ['--win-per-user-install', '--win-dir-chooser', '--win-menu', '--win-shortcut']
+        } else if (os.linux) {
+            installerType = "rpm"
+            installerOptions += ['--linux-package-name', 'guiserial', '--linux-shortcut']
+        } else if (os.macOsX) {
+            installerOptions += ['--mac-package-name', 'guiserial']
         }
-
-        if (os.macOsX) {
-            icon = "${projectDir}/src/main/resources/assets/icon/icon.ico"
-            installerType = 'dmg'
-        }
-
-        if (os.linux) {
-            icon = "${projectDir}/src/main/resources/assets/icon/icon.ico"
-            installerOptions += [
-                    '--linux-deb-maintainer', 'vran_dev@foxmail.com',
-                    '--linux-rpm-license-type', 'GPLv3',
-                    '--linux-shortcut'
-            ]
-        }
-    }
-}
-
-jpackage {
-    doLast {
-        file("${buildDir}/jpackage/guiserial-${version}.dmg").renameTo("${buildDir}/jpackage/guiserial-mac.dmg")
-        file("${buildDir}/jpackage/guiserial-${version}.msi").renameTo("${buildDir}/jpackage/guiserial-win.msi")
-        file("${buildDir}/jpackage/guiserial-${version}.rpm").renameTo("${buildDir}/jpackage/guiserial-linux.rpm")
-        file("${buildDir}/jpackage/guiserial-${version}.deb").renameTo("${buildDir}/jpackage/guiserial-linux.deb")
     }
 }

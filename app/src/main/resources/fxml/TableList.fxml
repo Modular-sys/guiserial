@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="497.0" stylesheets="/assets/css/global.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.zenheart.guiserial.controller.TableListController">
+    <TableView fx:id="tableView" layoutY="33.0" prefHeight="341.0" prefWidth="497.0" styleClass="to-color" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
+        <columns>
+            <TableColumn fx:id="checkbox" prefWidth="75.0" text="选择" />
+            <TableColumn fx:id="tableName" prefWidth="100.0" text="表名" />
+            <TableColumn fx:id="describe" prefWidth="200.0" text="描述" />
+            <TableColumn fx:id="operation" prefWidth="75.0" text="操作" />
+        </columns>
+    </TableView>
+    <AnchorPane layoutY="2.0" prefHeight="32.0" prefWidth="497.0" styleClass="table-search">
+        <Button layoutX="329.0" layoutY="3.0" mnemonicParsing="false" text="搜索" />
+        <Button layoutX="390.0" layoutY="3.0" mnemonicParsing="false" text="下载选中项" />
+        <TextField layoutX="3.0" layoutY="4.0" prefHeight="23.0" prefWidth="245.0" />
+    </AnchorPane>
+</AnchorPane>

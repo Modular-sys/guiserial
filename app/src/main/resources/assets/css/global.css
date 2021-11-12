@@ -1,0 +1,27 @@
+@font-face {
+    /*font-family : "Droid Serif";*/
+    src: url('/assets/fonts/DroidSerif-Italic.ttf');
+}
+
+@font-face {
+    /*font-family : "Fira Code";*/
+    src: url('/assets/fonts/FiraCode-Bold.ttf');
+}
+
+@font-face {
+    /*font-family : "Roboto Thin";*/
+    src: url('/assets/fonts/Roboto-Thin.ttf');
+}
+
+.global {
+    -fx-font-size: 12;
+    -fx-font-family : "Droid Serif";
+}
+
+.to-color {
+    -fx-background-color: #d4f1db;
+}
+
+.table-search {
+    -fx-background-color: #d4f1db;
+}

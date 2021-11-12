@@ -1,19 +1,17 @@
 allprojects {
-    apply plugin: 'idea'
-
-    group 'org.tdom'
-    //javafx应用版本字符串不能有-中横线
-    version '1.0'
-
-    repositories {
-        maven {
-            url 'https://maven.aliyun.com/nexus/content/groups/public/'
-        }
-        mavenCentral()
-    }
+    group 'xyz.zenheart'
+    /*javafx应用版本字符串不能有-中横线*/
+    version '0.0.1'
 
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
+    }
+
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        mavenCentral()
     }
 }
 
@@ -21,21 +19,26 @@ subprojects {
     apply plugin: 'java'
 
     compileJava {
-        sourceCompatibility = 11
-        targetCompatibility = 11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
-    idea {
-        module {
-            inheritOutputDirs = false
-            outputDir = compileJava.destinationDir
-            testOutputDir = compileTestJava.destinationDir
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
         }
     }
 
     dependencies {
-        it.testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-        it.testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+        it.implementation "jakarta.annotation:jakarta.annotation-api:${jakarta_version}"
+
+        it.compileOnly "org.projectlombok:lombok:${lombok_version}"
+        it.annotationProcessor "org.projectlombok:lombok:${lombok_version}"
+        it.testCompileOnly "org.projectlombok:lombok:${lombok_version}"
+        it.testAnnotationProcessor "org.projectlombok:lombok:${lombok_version}"
+
+        it.testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_verion}"
+        it.testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_verion}"
     }
 
     test {

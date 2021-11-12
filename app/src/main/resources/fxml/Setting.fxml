@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="xyz.zenheart.guiserial.controller.SettingController">
+    <padding>
+        <Insets top="6.0" />
+    </padding>
+    <AnchorPane prefHeight="30.0" prefWidth="490.0">
+        <Button layoutX="405.0" layoutY="2.0" mnemonicParsing="false" onAction="#saveConfigEvent" text="保存配置" />
+    </AnchorPane>
+    <AnchorPane prefHeight="30.0" prefWidth="490.0">
+        <TextField fx:id="directoryLocation" layoutX="11.0" layoutY="2.0" prefHeight="23.0" prefWidth="295.0" />
+        <Button fx:id="directoryChooser" layoutX="331.0" layoutY="1.0" text="选择目录" />
+        <Button layoutX="405.0" layoutY="1.0" mnemonicParsing="false" text="清除路径" />
+    </AnchorPane>
+    <AnchorPane prefHeight="30.0" prefWidth="490.0">
+        <TextField fx:id="databaseUrl" layoutX="11.0" layoutY="3.0" prefHeight="23.0" prefWidth="295.0" promptText="请输入数据库地址例如: 127.0.0.1:6379" />
+        <ChoiceBox fx:id="databaseType" layoutX="332.0" layoutY="2.0" prefHeight="23.0" prefWidth="64.0" />
+        <TextField fx:id="databaseName" layoutX="405.0" layoutY="2.0" prefHeight="23.0" prefWidth="64.0" promptText="数据库名" />
+    </AnchorPane>
+    <AnchorPane prefHeight="30.0" prefWidth="490.0">
+        <Label layoutX="10.0" layoutY="6.0" text="用户名:" />
+        <TextField fx:id="username" layoutX="60.0" layoutY="2.0" prefHeight="23.0" prefWidth="125.0" />
+        <Label layoutX="210.0" layoutY="6.0" text="密  码:" />
+        <PasswordField fx:id="password" layoutX="270.0" layoutY="2.0" prefHeight="23.0" prefWidth="125.0" />
+        <TextField fx:id="schema" layoutX="405.0" layoutY="2.0" prefHeight="23.0" prefWidth="64.0" promptText="schema" />
+    </AnchorPane>
+</VBox>

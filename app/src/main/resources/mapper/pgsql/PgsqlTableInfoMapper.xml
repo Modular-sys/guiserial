@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.zenheart.guiserial.modules.pgsql.mapper.IPgsqlTableInfoMapper">
+
+    <select id="queryTableInfo" resultType="xyz.zenheart.guiserial.pojo.entity.TableInfoEntity">
+        SELECT pgt_.tablename AS tableName, pgd_.description
+        FROM pg_tables pgt_
+        JOIN pg_class pgc_ ON pgc_.relname = pgt_.tablename
+        LEFT JOIN pg_description pgd_ ON pgd_.objoid = pgc_.oid AND pgd_.objsubid = '0'
+        WHERE 1=1
+        <if test="schema neq null">
+            AND pgt_.schemaname = #{schema}
+        </if>
+
+    </select>
+</mapper>
